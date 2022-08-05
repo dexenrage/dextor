@@ -1,0 +1,24 @@
+pkgname=dextor
+pkgver=1.0
+pkgrel=1
+pkgdesk='Redirects your internet traffic through the Tor network'
+arch=('x86_64')
+url='https://github.com/dexenrage/dextor'
+license=('Apache')
+depends=('tor' 'iptables' 'networkmanager')
+makedepends=('go')
+source=("git+${url}.git#tag=${pkgver}")
+sha512sums=('SKIP')
+
+build() {
+	cd ${srcdir}/${pkgname}/cmd/${pkgname}
+	go build
+}
+
+package() {
+	mkdir -p "${pkgdir}/opt/${pkgname}"
+	cp -r "${srcdir}/${pkgname}/cmd/${pkgname}/${pkgname}" "${pkgdir}/opt/${pkgname}"
+	cp -r "${srcdir}/${pkgname}/config/version" "${pkgdir}/opt/${pkgname}"
+	mkdir -p "${pkgdir}/usr/bin"
+	ln -sf "/opt/${pkgname}/${pkgname}" "${pkgdir}/usr/bin/${pkgname}"
+}
