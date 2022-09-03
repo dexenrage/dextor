@@ -11,14 +11,14 @@ source=("git+${url}.git#tag=${pkgver}")
 sha512sums=('SKIP')
 
 build() {
-	cd ${srcdir}/${pkgname}/cmd/${pkgname}
+	cd ${srcdir}/${pkgname}
 	go build
 }
 
 package() {
 	mkdir -p "${pkgdir}/opt/${pkgname}"
-	cp -r "${srcdir}/${pkgname}/cmd/${pkgname}/${pkgname}" "${pkgdir}/opt/${pkgname}"
-	cp -r "${srcdir}/${pkgname}/config/version" "${pkgdir}/opt/${pkgname}"
+	cp -r "${srcdir}/${pkgname}/${pkgname}" "${pkgdir}/opt/${pkgname}"
+	cp -r "${srcdir}/${pkgname}/version" "${pkgdir}/opt/${pkgname}"
 	mkdir -p "${pkgdir}/usr/bin"
 	ln -sf "/opt/${pkgname}/${pkgname}" "${pkgdir}/usr/bin/${pkgname}"
 }

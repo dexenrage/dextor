@@ -14,18 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package main
+package syscmd
 
-import "fmt"
+import (
+	"fmt"
+	"os/user"
+)
 
 const (
-	cmdStopTor   = `/bin/bash -c "systemctl stop tor"`
-	cmdFuser     = `/bin/bash -c "fuser -k 5353/tcp 9040/tcp 9050/tcp 9051/tcp > /dev/null 2>&1"`
-	cmdRestartNM = `/bin/bash -c "systemctl restart --now NetworkManager"`
+	StopTor               = `/bin/bash -c "systemctl stop tor"`
+	Fuser                 = `/bin/bash -c "fuser -k 5353/tcp 9040/tcp 9050/tcp 9051/tcp > /dev/null 2>&1"`
+	RestartNetworkManager = `/bin/bash -c "systemctl restart --now NetworkManager"`
 
-	cmdSysctlReadValues = `/bin/bash -c "sysctl -p"`
+	SysctlReadValues = `/bin/bash -c "sysctl -p"`
 
-	cmdResetIPTables = `/bin/bash -c "iptables -P INPUT ACCEPT
+	ResetIPTables = `/bin/bash -c "iptables -P INPUT ACCEPT
 	iptables -P FORWARD ACCEPT
 	iptables -P OUTPUT ACCEPT
 	iptables -t nat -F
@@ -34,8 +37,7 @@ const (
 	iptables -X"`
 )
 
-func cmdIPTablesConfig() string {
-	_, userID := getTorUser()
+func ConfigureIPTables(userID string) string {
 	cfg := `/bin/bash -c "NON_TOR="192.168.0.0/24 192.168.1.0/24 192.168.31.0/24"
 	TOR_UID=%v
 	TRANS_PORT=9040
@@ -56,7 +58,14 @@ func cmdIPTablesConfig() string {
 	return fmt.Sprintf(cfg, userID)
 }
 
-func cmdConnectTor() string {
-	user, _ := getTorUser()
-	return fmt.Sprintf(`sudo -u %v tor -f %v`, user, torrcDIR)
+func GetTorUser() (*user.User, error) {
+	u, err := user.Lookup(`debian-tor`)
+	if err == nil {
+		return u, err
+	}
+	return user.Lookup(`tor`)
+}
+
+func ConnectTor(torUser, torrcDIR string) string {
+	return fmt.Sprintf(`sudo -u %v tor -f %v`, torUser, torrcDIR)
 }

@@ -4,8 +4,8 @@ Redirects your internet traffic through the [Tor](https://www.torproject.org/) n
 # Installing
 * Go to [releases](https://github.com/dexenrage/dextor/releases).
 * Choose the latest version.
-* Download `PKGBUILD.tar.gz` and unarchive it.
-* Go to `dextor` folder and run `makepkg -si` in your terminal.
+* Download `PKGBUILD`.
+* Go to your `downloads` folder and run `makepkg -si` in your terminal.
 * Installed :white_check_mark:
 
 > Type `dextor` to run.

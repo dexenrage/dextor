@@ -14,45 +14,37 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package main
+package config
 
 const (
-	apiURL = `https://check.torproject.org/api/ip`
-
-	torrcDIR  = `/etc/tor/torrc.tmp`
-	resolvDIR = `/etc/resolv.conf`
-	resolvBAK = `/etc/resolv.bak`
-	sysctlDIR = `/etc/sysctl.conf`
-	sysctlBAK = `/etc/sysctl.bak`
-
-	disableIPv6 = `net.ipv6.conf.all.disable_ipv6 = 1
+	Sysctl = `net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1`
 
-	rcCFG = `VirtualAddrNetwork 10.0.0.0/10
+	TorRC = `VirtualAddrNetwork 10.0.0.0/10
 AutomapHostsOnResolve 1
 TransPort 9040
 DNSPort 5353
 ControlPort 9051
 RunAsDaemon 1`
 
-	localDNS = `nameserver 127.0.0.1`
+	LocalDNS = `nameserver 127.0.0.1`
 
-	cloudflareDNS = `nameserver 1.1.1.1
+	CloudflareDNS = `nameserver 1.1.1.1
 nameserver 1.0.0.1
 nameserver 2606:4700:4700::1111
 nameserver 2606:4700:4700::1001`
 
-	openDNS = `nameserver 208.67.222.222
+	OpenDNS = `nameserver 208.67.222.222
 nameserver 208.67.220.220
 nameserver 2620:119:35::35
 nameserver 2620:119:53::53`
 
-	googleDNS = `nameserver 8.8.8.8
+	GoogleDNS = `nameserver 8.8.8.8
 nameserver 8.8.4.4
 nameserver 2001:4860:4860::8888
 nameserver 2001:4860:4860::8844`
 
-	quad9DNS = `nameserver 9.9.9.9
+	Quad9DNS = `nameserver 9.9.9.9
 nameserver 149.112.112.112
 nameserver 2620:fe::fe
 nameserver 2620:fe::9`

@@ -1,8 +1,5 @@
 module dextor
 
-go 1.18
+go 1.19
 
-require (
-	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d
-	github.com/spf13/pflag v1.0.5
-)
+require github.com/spf13/pflag v1.0.5
